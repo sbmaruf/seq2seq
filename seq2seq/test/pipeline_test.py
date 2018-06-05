@@ -31,7 +31,6 @@ import yaml
 import numpy as np
 import tensorflow as tf
 from tensorflow import gfile
-
 from seq2seq.test import utils as test_utils
 
 BIN_FOLDER = os.path.abspath(
@@ -41,7 +40,7 @@ BIN_FOLDER = os.path.abspath(
 def _clear_flags():
   """Resets Tensorflow's FLAG values"""
   #pylint: disable=W0212
-  tf.app.flags.FLAGS = tf.app.flags._FlagValues()
+  # tf.app.flags.FLAGS = tf.app.flags._FlagValuesWrapper(FLAGS)
   tf.app.flags._global_parser = argparse.ArgumentParser()
 
 
@@ -54,7 +53,7 @@ class PipelineTest(tf.test.TestCase):
     self.output_dir = tempfile.mkdtemp()
     self.bin_folder = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "../../bin"))
-    tf.contrib.framework.get_or_create_global_step()
+    tf.train.get_or_create_global_step()
 
   def tearDown(self):
     shutil.rmtree(self.output_dir, ignore_errors=True)
@@ -237,4 +236,4 @@ class PipelineTest(tf.test.TestCase):
 
 
 if __name__ == "__main__":
-  tf.test.main()
+    tf.test.main()
